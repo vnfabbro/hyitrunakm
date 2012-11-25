@@ -1,0 +1,61 @@
+function [ img_centrada] = func_EscalarImagen2(img_original,coeficiente)
+
+%Este script escala y corta la imagen al size de la imagen original
+    angle=0;
+    [img_filas  img_columnas] = size(img_original);
+    
+
+    angulo=angle*2*pi/360;
+
+    coeficiente_inv = coeficiente^(-1);
+
+    ext0=[0;0];
+    ext1=coeficiente*[0;img_columnas-1];
+    ext2=coeficiente*[img_filas-1;0];
+    ext3=coeficiente*[img_filas-1;img_columnas-1];
+
+    max_filas=floor(max([ext0(1) ext1(1) ext2(1) ext3(1)]));
+    max_columnas=round(max([ext0(2) ext1(2) ext2(2) ext3(2)]));
+    min_filas=round(min([ext0(1) ext1(1) ext2(1) ext3(1)]));
+    min_columnas=round(min([ext0(2) ext1(2) ext2(2) ext3(2)])); 
+
+    img_escalada=zeros(length(min_filas:max_filas),length(min_columnas:max_columnas));
+
+
+  for fil= 1 : (length(min_filas:max_filas)) 
+  for col= 1 : (length(min_columnas:max_columnas))
+
+                prodMat = round(coeficiente_inv*[fil;col]);
+                x= prodMat(1,1);
+                if((x<0||x>(img_filas-1)))
+                    x=-1;
+                end
+                y= prodMat(2,1);
+                 if((y<0||y>(img_columnas-1)))
+                    y=-1;
+                 end
+                 if (x<0||y<0)
+                    img_escalada(fil,col)= 255;
+                 else
+                    img_escalada(fil, col) = img_original(x+1,y+1) ;
+                 end 
+            end
+  end
+
+[img_filas2  img_columnas2] = size(img_escalada);
+
+CFilas_original= round(img_filas/2);
+CCol_original=round(img_columnas/2);
+CFilas_Nueva=round(img_filas2/2);
+CCol_Nueva=round(img_columnas2/2);
+
+if (coeficiente>1)
+    
+img_centrada=img_escalada((CFilas_Nueva-CFilas_original):(CFilas_Nueva+CFilas_original),(CCol_Nueva-CCol_original):(CCol_Nueva+CCol_original));
+
+end
+    
+  
+  
+end
+

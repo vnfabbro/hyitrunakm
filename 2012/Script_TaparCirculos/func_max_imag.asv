@@ -1,0 +1,5 @@
+function [pos_max_fila pos_max_columna valor]=func_max_imag(imag)
+    [valor aux]=max(imag) %me devuelve el valor del maximo por columna, pero me da la posicion en la que esta(EN COLUMNA)
+    [valor pos_max_columna]=max(valor);
+    pos_max_fila=aux(pos_max_columna);
+end

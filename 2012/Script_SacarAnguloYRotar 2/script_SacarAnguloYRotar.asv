@@ -1,0 +1,39 @@
+clc;
+close all;
+clear all;
+fclose all;
+
+
+kernel= func_CargarImagen('ImgSimple2.jpg','.\Imagenes');
+
+Img1=func_CargarImagen('ImgRotada.jpg','.\Imagenes');
+
+Img=Img1;
+
+
+MatCorrelacion= func_Correlacionar(kernel,Img);
+
+MatMaximos= func_ObtenerMaximos2(MatCorrelacion);
+
+%Obtengo la fila y la columna de lo que sería un punto que agrego. Este
+%punto tiene la misma fila que el punto vértice ya calculado, y la misma
+%columna que el punto inferior derecho de la imagen original. Así se forma
+%un triàngulo rectángulo, con el cual se pueden calcular el opuesto y el
+%adyacente, para sacar el ángulo con el arcotangente.
+F5 = MatMaximos(2,1);
+C5=MatMaximos(4,2);
+
+
+opuesto=abs( MatMaximos(4,1)- F5) ;
+adyacente= abs(C5 - MatMaximos(2,2));
+
+x= opuesto/adyacente;
+RadianAngle= atan(x);
+
+angulo=-RadianAngle*180/pi; %pongo el - para que gire para el otro lado
+
+
+mat_rotada = func_RotarImagen(Img,angulo );
+
+figure;
+imshow(uint8(mat_rotada));
