@@ -1,7 +1,6 @@
 function [ MatCorrelacion] = func_Correlacionar2(kernel,Img)
 %esta version sólo me correlaciona en un área dada( el size del kernel)
 
-
 [imgF , imgC] = size(Img);
 [kF , kC] = size(kernel);
 MatCorrelacion = zeros(size(Img));

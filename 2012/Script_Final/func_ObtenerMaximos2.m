@@ -1,8 +1,7 @@
 function [ MatMaximos ] = func_ObtenerMaximos2(MatCorrelacion )
-
-
 %Aca filtro con el umbral que yo asigno, para obtener las áreas máximas, el
 %tercer argumento es para que filtre por arriba de ese umbral(1)
+
 ImgFiltrada = func_filtrarImagenUmbral(MatCorrelacion, 255,1);
 
 ImgFiltradaInvertida= func_InvertirImagen(ImgFiltrada,0,255);
